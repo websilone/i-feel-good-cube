@@ -1,7 +1,8 @@
 // import Immutable from 'immutable'
-import { getTeams, getTeam } from 'utils/api'
+import { getTeams, getTeam, sendWizz } from 'utils/api'
 import { GET_TEAMS_REQUEST, GET_TEAMS_SUCCESS, GET_TEAMS_FAILURE } from 'constants/teams'
 import { GET_TEAM_REQUEST, GET_TEAM_SUCCESS } from 'constants/team'
+import { NOTIFICATION_REQUEST, NOTIFICATION_SUCCESS, NOTIFICATION_CLEAN } from 'constants/notification'
 
 /**
  * Checks if the list of teams has already been fetched
@@ -80,7 +81,33 @@ const loadTeam = (id, loader) => {
     }
 }
 
+const notify = (id, name) => {
+    return dispatch => {
+        dispatch({
+            type: NOTIFICATION_REQUEST,
+            name
+        })
+
+        sendWizz(id).then(() => {
+            setTimeout(() => {
+                dispatch({
+                    type: NOTIFICATION_SUCCESS,
+                    name
+                })
+            }, 1000)
+        })
+    }
+}
+
+const cleanNotification = () => {
+    return {
+        type: NOTIFICATION_CLEAN
+    }
+}
+
 export {
     loadTeams,
-    loadTeam
+    loadTeam,
+    notify,
+    cleanNotification
 }

@@ -15,15 +15,17 @@ import ListItem from 'material-ui/lib/lists/list-item'
 import DropDownMenu from 'material-ui/lib/DropDownMenu'
 import RaisedButton from 'material-ui/lib/raised-button'
 // import IconMenu from 'material-ui/lib/menus/icon-menu'
-// import IconButton from 'material-ui/lib/icon-button'
+import IconButton from 'material-ui/lib/icon-button'
 import MenuItem from 'material-ui/lib/menus/menu-item'
 // import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert'
+import Notification from 'material-ui/lib/svg-icons/social/notifications-active'
+import Snackbar from 'material-ui/lib/snackbar'
 
 // import LineChart from 'react-d3-basic/lib/line'
 import { Line, Chart } from 'react-d3-shape'
 import { Xaxis } from 'react-d3-core'
 
-import { loadTeam, loadTeams } from 'actions/teams'
+import { loadTeam, loadTeams, notify, cleanNotification } from 'actions/teams'
 
 import moodConfig from 'utils/moodConfig'
 import teamsData from '../utils/teamsData'
@@ -67,6 +69,10 @@ const styles = {
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap'
+    },
+    button: {
+        margin: 12,
+        float: 'right'
     }
 }
 
@@ -134,6 +140,8 @@ class Team extends React.Component {
         }),
         loadTeam: React.PropTypes.func,
         loadTeams: React.PropTypes.func,
+        notify: React.PropTypes.func,
+        cleanNotification: React.PropTypes.func,
         team: ImmutablePropTypes.map,
         teams: ImmutablePropTypes.list
     };
@@ -161,6 +169,14 @@ class Team extends React.Component {
 
     handleTeamChange (e, index, value) {
         browserHistory.push(`/teams/${value}`)
+    }
+
+    handleNotify (id, name) {
+        this.props.notify(id, name)
+    }
+
+    handleNotificationClose () {
+        this.props.cleanNotification()
     }
 
     render () {
@@ -195,7 +211,7 @@ class Team extends React.Component {
     }
 
     renderTeam () {
-        const { team, teams, isLoadingTeams } = this.props
+        const { team, teams, isLoadingTeams, notification } = this.props
 
         return (
             <div>
@@ -219,6 +235,14 @@ class Team extends React.Component {
                 </Paper>
 
                 <Paper style={ styles.listPaper }>
+                    <RaisedButton
+                        label="Wizz the team !"
+                        labelPosition="after"
+                        icon={ <Notification /> }
+                        style={ styles.button }
+                        onTouchTap={ this.handleNotify.bind(this, team.get('id'), team.get('name'))}
+                    />
+
                     <List subheader="Team members">
                         {
                             team.get('people').map((member, index) => (
@@ -227,11 +251,19 @@ class Team extends React.Component {
                                     primaryText={ member.get('name') }
                                     secondaryText={ <LastUpdateTime date={ member.get('last_state', null) } /> }
                                     leftIcon={ <span className={ moodConfig[member.get('stat')].icon } style={ Object.assign({}, styles.mood, { color: moodConfig[member.get('stat')].color }) }></span> }
+                                    rightIconButton={ <IconButton onTouchTap={ this.handleNotify.bind(this, member.get('id'), member.get('name')) }><Notification /></IconButton> }
                                 />
                             ))
                         }
                     </List>
                 </Paper>
+
+                <Snackbar
+                    open={ notification.get('open', false) }
+                    message={ notification.get('message', '') }
+                    autoHideDuration={ 3000 }
+                    onRequestClose={ this.handleNotificationClose.bind(this) }
+                />
             </div>
         )
     }
@@ -267,13 +299,16 @@ const mapStateToProps = (state) => {
         isLoading: state.team.get('isLoading', true),
         isLoadingTeams: state.teams.get('isLoading', true),
         team: state.team.get('team', Immutable.Map()),
-        teams: state.teams.get('teams', Immutable.List())
+        teams: state.teams.get('teams', Immutable.List()),
+        notification: state.notification
     }
 }
 
 const TeamContainer = connect(mapStateToProps, {
     loadTeam,
-    loadTeams
+    loadTeams,
+    notify,
+    cleanNotification
 })(Team)
 
 export { Team, TeamContainer }

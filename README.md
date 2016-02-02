@@ -1,6 +1,4 @@
-# marvel-heroes
-Marvel heroes list made in React<br />
-Live demo is here : [http://marvel-heroes.herokuapp.com](http://marvel-heroes.herokuapp.com/)
+# i-feel-good-cube
 
 ### Ecosystem
 - ReactJS
@@ -11,9 +9,6 @@ Live demo is here : [http://marvel-heroes.herokuapp.com](http://marvel-heroes.he
 - Babel
 - ES2015
 - ESLint
-- Karma
-- PhantomJS
-- Jasmine
 
 ### Installation
 ```bash
@@ -29,12 +24,3 @@ $ npm start
 ```bash
 $ npm run build
 ```
-
-### Run tests
-```bash
-$ npm run test
-```
-
-### TODOs
-- Handle errors when loading data
-- Should do more tests ^^
