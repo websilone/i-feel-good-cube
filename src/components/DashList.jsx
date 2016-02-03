@@ -91,19 +91,23 @@ class DashList extends React.Component {
                     cols={ 3 }
                     style={ styles.list }
                 >
-                    { list.map((item, index) => (
-                        <GridTile
-                            key={ index }
-                            title={ (<span><Avatar backgroundColor={ Colors.grey900 } size={ 30 }>{ item.get('name')[0] }</Avatar> { item.get('name') }</span>) }
-                            actionIcon={ <IconButton onTouchTap={ this.handleTouchTap.bind(this, item.get('id')) }><ChevronRight color="white"/></IconButton> }
-                            style={ {
-                                backgroundColor: moodConfig[item.get('stat')].color,
-                                color: moodConfig[item.get('stat')].text
-                            } }
-                        >
-                            <span className={ moodConfig[item.get('stat')].icon } style={ styles.mood }></span>
-                        </GridTile>
-                    )) }
+                    { list.map((item, index) => {
+                        const mood = Math.round(item.get('stat'))
+
+                        return (
+                            <GridTile
+                                key={ index }
+                                title={ (<span><Avatar backgroundColor={ Colors.grey900 } size={ 30 }>{ item.get('name')[0] }</Avatar> { item.get('name') }</span>) }
+                                actionIcon={ <IconButton onTouchTap={ this.handleTouchTap.bind(this, item.get('id')) }><ChevronRight color="white"/></IconButton> }
+                                style={ {
+                                    backgroundColor: moodConfig[mood].color,
+                                    color: moodConfig[mood].text
+                                } }
+                            >
+                                <span className={ moodConfig[mood].icon } style={ styles.mood }></span>
+                            </GridTile>
+                        )
+                    }) }
                 </GridList>
             }
         </div>
