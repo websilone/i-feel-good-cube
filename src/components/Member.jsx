@@ -1,4 +1,5 @@
 import React from 'react'
+import { browserHistory } from 'react-router'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
 // Material UI
@@ -46,10 +47,14 @@ class Member extends React.Component {
         this.props.wizzAction(id, name)
     }
 
+    handleTouchTap (userId) {
+        browserHistory.push(`/user/${userId}`)
+    }
+
     render () {
         const { memberInfo } = this.props
-
-        const mood = Math.round(memberInfo.get('stat'))
+        let mood = Math.round(memberInfo.get('stat', -1))
+        mood = ( mood >= -1 && mood <= 2 ) ? mood : -1
 
         return <div>
             <ListItem
@@ -57,11 +62,8 @@ class Member extends React.Component {
                 secondaryText={ <LastUpdateTime date={ memberInfo.get('last_state', null) } /> }
                 leftIcon={ <span className={ moodConfig[mood].icon } style={ Object.assign({}, styles.mood, { color: moodConfig[mood].color }) }></span> }
                 rightIconButton={ <IconButton onTouchTap={ this.handleWizz.bind(this, memberInfo.get('id'), memberInfo.get('name')) }><Notification /></IconButton> }
+                onTouchTap={ this.handleTouchTap.bind(this, memberInfo.get('id')) }
             />
-
-            <div style={ styles.memberDetails }>
-                Some content text here
-            </div>
         </div>
     }
 }

@@ -92,7 +92,8 @@ class DashList extends React.Component {
                     style={ styles.list }
                 >
                     { list.map((item, index) => {
-                        const mood = Math.round(item.get('stat'))
+                        let mood = Math.round(item.get('stat', -1))
+                        mood = ( mood >= -1 && mood <= 2 ) ? mood : -1
 
                         return (
                             <GridTile

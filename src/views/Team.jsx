@@ -1,5 +1,5 @@
 import React from 'react'
-import { browserHistory } from 'react-router';
+import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 import shouldPureComponentUpdate from 'react-pure-render/function'
 import Immutable from 'immutable'
@@ -20,10 +20,6 @@ import MenuItem from 'material-ui/lib/menus/menu-item'
 // import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert'
 import Notification from 'material-ui/lib/svg-icons/social/notifications-active'
 import Snackbar from 'material-ui/lib/snackbar'
-
-// import LineChart from 'react-d3-basic/lib/line'
-import { Line, Chart } from 'react-d3-shape'
-import { Xaxis } from 'react-d3-core'
 
 import { loadTeam, loadTeams, notify, cleanNotification } from 'actions/teams'
 import Member from 'components/Member'
@@ -75,63 +71,6 @@ const styles = {
     }
 }
 
-const margins = { left: 100, right: 100, top: 50, bottom: 50 }
-const chartData = [
-    {
-        name: 'Lavon Hilll I',
-        BMI: 20.57,
-        age: 12,
-        birthday: '1994-10-26T00:00:00.000Z',
-        city: 'Annatown',
-        married: true,
-        index: 1
-    },
-    {
-        name: 'Clovis Pagac',
-        BMI: 24.28,
-        age: 26,
-        birthday: '1995-11-10T00:00:00.000Z',
-        city: 'South Eldredtown',
-        married: false,
-        index: 3
-    },
-    {
-        name: 'Gaylord Paucek',
-        BMI: 24.41,
-        age: 30,
-        birthday: '1975-06-12T00:00:00.000Z',
-        city: 'Koeppchester',
-        married: true,
-        index: 5
-    },
-    {
-        name: 'Ashlynn Kuhn MD',
-        BMI: 23.77,
-        age: 32,
-        birthday: '1985-08-09T00:00:00.000Z',
-        city: 'West Josiemouth',
-        married: false,
-        index: 6
-    }
-]
-
-const chartSeries = [
-    {
-        field: 'age',
-        name: 'Age',
-        color: '#ff7f0e',
-        style: {
-            'stroke-width': 2,
-            'stroke-opacity': 1,
-            'fill-opacity': 1
-        }
-    }
-]
-
-const x = (d) => {
-    return d.index;
-}
-
 class Team extends React.Component {
     static propTypes = {
         params: React.PropTypes.shape({
@@ -155,9 +94,13 @@ class Team extends React.Component {
         this.props.loadTeam(this.props.params.teamId, true)
         this.props.loadTeams()
 
-        /* this.interval = setInterval(() => {
+        this.interval = setInterval(() => {
             this.props.loadTeam(this.props.params.teamId, false)
-        }, 2000) */
+        }, 2000)
+    }
+
+    componentWillUnmount () {
+        clearInterval(this.interval)
     }
 
     componentWillReceiveProps (nextProps) {
@@ -188,24 +131,6 @@ class Team extends React.Component {
                     ? <Paper style={ styles.titlePaper } zDepth={ 1 }>Chargement en cours...</Paper>
                     : this.renderTeam()
             }
-
-            { /* <Paper>
-                <Chart
-                    width= { 800 }
-                    height= { 300 }
-                    data= { chartData }
-                    chartSeries= { chartSeries }
-                    x= {x}
-                    margins={ margins }
-                >
-                    <Line
-                        chartSeries= { chartSeries }
-                        x= {x}
-                    />
-
-                    <Xaxis/>
-                </Chart>
-            </Paper> */ }
         </div>
     }
 

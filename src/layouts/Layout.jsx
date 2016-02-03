@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import { browserHistory } from 'react-router';
+import { connect } from 'react-redux'
 
 import AppBar from 'material-ui/lib/app-bar'
 import IconButton from 'material-ui/lib/icon-button'
@@ -17,8 +18,20 @@ class Layout extends React.Component {
         children: PropTypes.element
     };
 
+    constructor (props) {
+        super(props)
+        this.handleBackAction = this.handleBackAction.bind(this)
+    }
+
     handleBackAction () {
-        browserHistory.push('/dashboard')
+        const { location, teamId } = this.props
+
+        if (location.pathname.indexOf('/teams') > -1){
+            browserHistory.push('/dashboard')
+        }
+        else {
+            browserHistory.push(`/teams/${teamId}`)
+        }
     }
 
     render () {
@@ -38,4 +51,12 @@ class Layout extends React.Component {
     }
 }
 
-export default Layout
+const mapStateToProps = (state) => {
+    return {
+        teamId: state.user.getIn(['user', 'team_id'], 0)
+    }
+}
+
+const LayoutContainer = connect(mapStateToProps)(Layout)
+
+export { Layout, LayoutContainer }
