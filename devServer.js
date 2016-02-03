@@ -6,6 +6,9 @@ var config = require('./webpack.config.js');
 var app = express();
 var compiler = webpack(config);
 
+app.use(express.static(path.resolve(__dirname, './dist')));
+app.use('static/', express.static(path.resolve(__dirname, './dist/static')));
+
 app.use(require('webpack-dev-middleware')(compiler, {
     color: true,
     noInfo: true,

@@ -1,7 +1,7 @@
 {
   "name": "marvel-heroes",
   "version": "1.0.0",
-  "description": "Marvel heroes list made in React",
+  "description": "I feel good Cube",
   "main": "index.js",
   "scripts": {
     "clean": "rimraf dist",
@@ -12,18 +12,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/websilone/marvel-heroes.git"
+    "url": "git+https://github.com/websilone/i-feel-good-cube.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/websilone/marvel-heroes/issues"
+    "url": "https://github.com/websilone/i-feel-good-cube/issues"
   },
   "engines": {
     "node": "4.2.3"
   },
-  "homepage": "https://github.com/websilone/marvel-heroes#readme",
+  "homepage": "https://github.com/websilone/i-feel-good-cube#readme",
   "dependencies": {
     "history": "^1.17.0",
     "immutable": "^3.7.6",

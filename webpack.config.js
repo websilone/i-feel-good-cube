@@ -6,6 +6,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var DEVELOPMENT = process.env.NODE_ENV !== 'production';
 
 var plugins = [
+    new ExtractTextPlugin('static/styles/bundle.css', {allChunks: false}),
     new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /fr$/),
     new webpack.NoErrorsPlugin(),
     new webpack.ProvidePlugin({
