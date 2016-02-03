@@ -26,9 +26,8 @@ import { Line, Chart } from 'react-d3-shape'
 import { Xaxis } from 'react-d3-core'
 
 import { loadTeam, loadTeams, notify, cleanNotification } from 'actions/teams'
-
+import Member from 'components/Member'
 import moodConfig from 'utils/moodConfig'
-import teamsData from '../utils/teamsData'
 
 // const Xaxis = require('react-d3-core').Xaxis
 
@@ -156,9 +155,9 @@ class Team extends React.Component {
         this.props.loadTeam(this.props.params.teamId, true)
         this.props.loadTeams()
 
-        this.interval = setInterval(() => {
+        /* this.interval = setInterval(() => {
             this.props.loadTeam(this.props.params.teamId, false)
-        }, 2000)
+        }, 2000) */
     }
 
     componentWillReceiveProps (nextProps) {
@@ -211,7 +210,7 @@ class Team extends React.Component {
     }
 
     renderTeam () {
-        const { team, teams, isLoadingTeams, notification } = this.props
+        const { team, teams, isLoadingTeams, notification, notify } = this.props
 
         return (
             <div>
@@ -246,13 +245,7 @@ class Team extends React.Component {
                     <List subheader="Team members">
                         {
                             team.get('people').map((member, index) => (
-                                <ListItem
-                                    key={ index }
-                                    primaryText={ member.get('name') }
-                                    secondaryText={ <LastUpdateTime date={ member.get('last_state', null) } /> }
-                                    leftIcon={ <span className={ moodConfig[member.get('stat')].icon } style={ Object.assign({}, styles.mood, { color: moodConfig[member.get('stat')].color }) }></span> }
-                                    rightIconButton={ <IconButton onTouchTap={ this.handleNotify.bind(this, member.get('id'), member.get('name')) }><Notification /></IconButton> }
-                                />
+                                <Member key={ index } memberInfo={ member } wizzAction={ notify } />
                             ))
                         }
                     </List>
@@ -266,31 +259,6 @@ class Team extends React.Component {
                 />
             </div>
         )
-    }
-}
-
-class LastUpdateTime extends React.Component {
-    static propTypes = {
-        date: React.PropTypes.any
-    };
-
-    constructor (props) {
-        super(props)
-        this.forceUpdate = this.forceUpdate.bind(this)
-
-        this.interval = setInterval(this.forceUpdate, 1000)
-    }
-
-    componentWillUnmount () {
-        clearInterval(this.interval)
-    }
-
-    render () {
-        const { date } = this.props
-
-        return <div style={ styles.secondaryText }>
-            { date ? `updated ${moment(date).fromNow()}` : 'N/A' }
-        </div>
     }
 }
 
