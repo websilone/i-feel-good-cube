@@ -106,7 +106,11 @@ class User extends React.Component {
         })
 
         const lastEntry = user.getIn(['user', 'historic'], Immutable.List()).last() || Immutable.Map()
-        chartSeries[0].color = moodConfig[lastEntry.get('value', -1)].color
+
+        let mood = Math.round(lastEntry.get('value', -1))
+        mood = ( mood >= -1 && mood <= 2 ) ? mood : -1
+
+        chartSeries[0].color = moodConfig[mood].color
 
         return <div>
             <Paper style={ styles.titlePaper } zDepth={ 1 }>

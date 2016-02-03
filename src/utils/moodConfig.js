@@ -12,8 +12,8 @@ export default {
         icon: 'lnr lnr-sad'
     },
     '1' : {
-        color: Colors.yellow400,
-        text: Colors.yellow900,
+        color: Colors.orange400,
+        text: Colors.orange900,
         icon: 'lnr lnr-neutral'
     },
     '2' : {

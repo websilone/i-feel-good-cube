@@ -1,6 +1,6 @@
 // import Immutable from 'immutable'
 import { getTeams, getTeam, sendWizz } from 'utils/api'
-import { GET_TEAMS_REQUEST, GET_TEAMS_SUCCESS, GET_TEAMS_FAILURE } from 'constants/teams'
+import { GET_TEAMS_REQUEST, GET_TEAMS_SUCCESS, GET_TEAMS_FAILURE, UPDATE_TEAMS } from 'constants/teams'
 import { GET_TEAM_REQUEST, GET_TEAM_SUCCESS } from 'constants/team'
 import { NOTIFICATION_REQUEST, NOTIFICATION_SUCCESS, NOTIFICATION_CLEAN } from 'constants/notification'
 
@@ -103,9 +103,18 @@ const cleanNotification = () => {
     }
 }
 
+const updateTeams = (id, team) => {
+    return {
+        type: UPDATE_TEAMS,
+        id,
+        team
+    }
+}
+
 export {
     loadTeams,
     loadTeam,
     notify,
-    cleanNotification
+    cleanNotification,
+    updateTeams
 }

@@ -11,7 +11,8 @@ import moodConfig from 'utils/moodConfig'
 
 const styles = {
     mood: {
-        fontSize: '1.5rem'
+        fontSize: '2.4rem',
+        marginTop: '5px'
     },
     secondaryText: {
         fontSize: '14px',

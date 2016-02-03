@@ -94,13 +94,13 @@ class Team extends React.Component {
         this.props.loadTeam(this.props.params.teamId, true)
         this.props.loadTeams()
 
-        this.interval = setInterval(() => {
+        /* this.interval = setInterval(() => {
             this.props.loadTeam(this.props.params.teamId, false)
-        }, 2000)
+        }, 2000) */
     }
 
     componentWillUnmount () {
-        clearInterval(this.interval)
+        // clearInterval(this.interval)
     }
 
     componentWillReceiveProps (nextProps) {
