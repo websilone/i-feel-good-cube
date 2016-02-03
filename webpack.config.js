@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var aliases = require('./aliases');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var DEVELOPMENT = process.env.NODE_ENV !== 'production';
 
