@@ -33,27 +33,25 @@ const shouldLoadTeams = state => !state.get('haveBeenLoaded', false)
  * 3. then dispatch a GET_TEAMSSUCCESS action with the json
  * @returns {Function}
  */
-const loadTeams = () => {
-    return (dispatch, getState) => {
-        if (shouldLoadTeams(getState().teams)) {
-            dispatch({ type: GET_TEAMS_REQUEST })
+const loadTeams = (loader) => {
+    return (dispatch) => {
+        loader && dispatch({ type: GET_TEAMS_REQUEST })
 
-            getTeams().then(json => {
-                setTimeout(() => {
-                    dispatch({
-                        type: GET_TEAMS_SUCCESS,
-                        teams: json
-                    })
-                }, 1000)
-            })
-            .catch(err => {
+        getTeams().then(json => {
+            setTimeout(() => {
+                dispatch({
+                    type: GET_TEAMS_SUCCESS,
+                    teams: json
+                })
+            }, 1000)
+        })
+        .catch(err => {
                 dispatch({
                     type: GET_TEAMS_FAILURE,
                     error: err
-                })
+                    })
             })
         }
-    }
 }
 
 /**

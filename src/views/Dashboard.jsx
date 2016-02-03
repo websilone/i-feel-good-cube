@@ -34,7 +34,15 @@ class Dashboard extends React.Component {
     }
 
     componentDidMount () {
-        this.props.loadTeams()
+        this.props.loadTeams(true)
+
+        /* this.interval = setInterval(() => {
+            this.props.loadTeams(false)
+        }, 2000) */
+    }
+
+    componentWillUnmount () {
+        clearInterval(this.interval)
     }
 
     render () {

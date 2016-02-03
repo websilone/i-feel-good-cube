@@ -100,8 +100,6 @@ class User extends React.Component {
     renderUser () {
         const { user } = this.props
 
-        console.log(user.getIn(['user', 'historic'], Immutable.List()))
-
         const historic = user.getIn(['user', 'historic'], Immutable.List()).takeLast(30).toJS().map((entry, index) => {
             entry.index = index
             return entry
