@@ -24,6 +24,6 @@ app.use('*', function (req, res) {
     return res.sendFile(path.resolve(__dirname, 'dist/index.html'));
 });
 
-app.listen(app.get('port'), function() {
+app.listen(app.get('port'), '0.0.0.0', function() {
     console.log('Node app is running on port', app.get('port'));
 });
